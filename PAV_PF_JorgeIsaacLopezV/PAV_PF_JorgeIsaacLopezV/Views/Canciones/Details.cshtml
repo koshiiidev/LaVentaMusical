@@ -1,0 +1,62 @@
+﻿@model PAV_PF_JorgeIsaacLopezV.Cancion
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    bool esAdmin = User != null
+                   && User.Identity != null
+                   && User.Identity.IsAuthenticated
+                   && User.Identity.Name == "admin@gmail.com";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cancion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo_cancion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.codigo_cancion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre_cancion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nombre_cancion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.precio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.precio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GeneroMusical.codigo_genero)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GeneroMusical.codigo_genero)
+        </dd>
+    </dl>
+</div>
+
+<p>
+    @if (esAdmin)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id_cancion }) @: |
+    }
+    @Html.ActionLink("Back to List", "Index") @: |
+    @Html.ActionLink(
+        "Agregar al carrito",
+        "AgregarAlCarrito",
+        "Ventas",
+        new { idCancion = Model.id_cancion },
+        null
+    )
+</p>

@@ -1,0 +1,83 @@
+﻿@model PAV_PF_JorgeIsaacLopezV.Usuario
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Usuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.numero_identificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero_identificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre_completo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre_completo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.genero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.genero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.correo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.correo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numero_tarjeta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero_tarjeta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contrasena)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contrasena)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Perfil.nombre_perfil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Perfil.nombre_perfil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoTarjeta.nombre_tarjeta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoTarjeta.nombre_tarjeta)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_usuario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

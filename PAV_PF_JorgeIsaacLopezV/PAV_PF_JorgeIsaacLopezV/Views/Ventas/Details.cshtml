@@ -1,0 +1,67 @@
+﻿@model PAV_PF_JorgeIsaacLopezV.Venta
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Venta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.numero_factura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero_factura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_compra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_compra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.subtotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subtotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.iva)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.iva)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.numero_identificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.numero_identificacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_venta }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

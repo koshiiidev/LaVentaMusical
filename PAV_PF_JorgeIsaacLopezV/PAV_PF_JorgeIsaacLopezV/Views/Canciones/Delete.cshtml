@@ -1,0 +1,53 @@
+﻿@model PAV_PF_JorgeIsaacLopezV.Cancion
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Cancion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo_cancion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.codigo_cancion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre_cancion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nombre_cancion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.precio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.precio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GeneroMusical.codigo_genero)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GeneroMusical.codigo_genero)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

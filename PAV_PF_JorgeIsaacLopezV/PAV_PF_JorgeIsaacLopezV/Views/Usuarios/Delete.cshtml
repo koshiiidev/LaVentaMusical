@@ -1,0 +1,89 @@
+﻿@model PAV_PF_JorgeIsaacLopezV.Usuario
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Usuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.numero_identificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero_identificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre_completo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre_completo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.genero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.genero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.correo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.correo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numero_tarjeta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero_tarjeta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contrasena)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contrasena)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Perfil.nombre_perfil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Perfil.nombre_perfil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoTarjeta.nombre_tarjeta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoTarjeta.nombre_tarjeta)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,50 @@
+﻿@model PAV_PF_JorgeIsaacLopezV.Models.ViewModels.CarritoViewModel
+
+@{
+    ViewBag.Title = "Carrito de Compra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Carrito de Compra</h2>
+
+@if (Model.Items == null || !Model.Items.Any())
+{
+    <p>No hay canciones en el carrito.</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>Canción</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.NombreCancion</td>
+                <td>@item.Precio.ToString("C")</td>
+                <td>@item.Cantidad</td>
+                <td>@item.Subtotal.ToString("C")</td>
+                <td>
+                    @Html.ActionLink("Eliminar", "EliminarDelCarrito", "Ventas", new { idCancion = item.IdCancion }, null)
+                </td>
+            </tr>
+        }
+    </table>
+
+    <hr />
+
+    <p><strong>Subtotal:</strong> @Model.Subtotal.ToString("C")</p>
+    <p><strong>IVA:</strong> @Model.Iva.ToString("C")</p>
+    <p><strong>Total:</strong> @Model.Total.ToString("C")</p>
+
+    using (Html.BeginForm("ConfirmarCompra", "Ventas", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-success">Confirmar compra</button>
+    }
+}

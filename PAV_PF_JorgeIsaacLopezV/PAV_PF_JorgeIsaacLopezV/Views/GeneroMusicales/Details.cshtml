@@ -1,0 +1,35 @@
+﻿@model PAV_PF_JorgeIsaacLopezV.GeneroMusical
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>GeneroMusical</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo_genero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codigo_genero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_genero }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
