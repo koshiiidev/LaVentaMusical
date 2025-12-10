@@ -25,6 +25,7 @@ namespace PAV_PF_JorgeIsaacLopezV
         public int id_genero { get; set; }
         public string nombre_cancion { get; set; }
         public decimal precio { get; set; }
+        public string artista { get; set; }
     
         public virtual GeneroMusical GeneroMusical { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

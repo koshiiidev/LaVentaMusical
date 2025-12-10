@@ -119,3 +119,12 @@ INNER JOIN Usuario u ON v.id_usuario = u.id_usuario
 INNER JOIN DetalleVenta d ON v.id_venta = d.id_venta
 INNER JOIN Cancion c ON d.id_cancion = c.id_cancion;
 GO
+
+
+USE LaVentaMusical;
+GO
+
+ALTER TABLE Cancion
+ADD artista VARCHAR(100) NOT NULL CONSTRAINT DF_Cancion_Artista DEFAULT('Desconocido');
+GO
+

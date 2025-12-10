@@ -57,7 +57,7 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_cancion,codigo_cancion,id_genero,nombre_cancion,precio")] Cancion cancion)
+        public ActionResult Create([Bind(Include = "id_cancion,codigo_cancion,id_genero,artista,nombre_cancion,precio")] Cancion cancion)
         {
             if (!EsAdmin())
             {
@@ -100,7 +100,7 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id_cancion,codigo_cancion,id_genero,nombre_cancion,precio")] Cancion cancion)
+        public ActionResult Edit([Bind(Include = "id_cancion,codigo_cancion,id_genero,artista,nombre_cancion,precio")] Cancion cancion)
         {
             if (!EsAdmin())
             {

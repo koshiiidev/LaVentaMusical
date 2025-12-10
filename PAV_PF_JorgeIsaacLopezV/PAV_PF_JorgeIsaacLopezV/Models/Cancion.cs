@@ -29,6 +29,12 @@ namespace PAV_PF_JorgeIsaacLopezV.Models
         public string NombreCancion { get; set; }
 
         [Required]
+        [Column("artista")]
+        [StringLength(100)]
+        public string artista { get; set; }
+
+
+        [Required]
         [Column("precio")]
         public decimal Precio { get; set; }
 

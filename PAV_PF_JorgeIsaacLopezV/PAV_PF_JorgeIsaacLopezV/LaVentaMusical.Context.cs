@@ -33,8 +33,5 @@ namespace PAV_PF_JorgeIsaacLopezV
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Venta> Venta { get; set; }
         public virtual DbSet<v_DetalleFactura> v_DetalleFactura { get; set; }
-
-        public System.Data.Entity.DbSet<PAV_PF_JorgeIsaacLopezV.Models.Perfil> Perfils { get; set; }
-        public object Perfiles { get; internal set; }
     }
 }
