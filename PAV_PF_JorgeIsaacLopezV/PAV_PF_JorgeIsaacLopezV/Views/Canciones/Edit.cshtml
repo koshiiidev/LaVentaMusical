@@ -1,75 +1,74 @@
 ﻿@model PAV_PF_JorgeIsaacLopezV.Cancion
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar canción";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<div class="page-header">
+    <h2>Editar canción</h2>
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.id_cancion)
 
-<div class="form-horizontal">
-    <h4>Cancion</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Datos de la canción</h3>
+        </div>
+        <div class="panel-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @Html.HiddenFor(model => model.id_cancion)
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.codigo_cancion, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => m.codigo_cancion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.codigo_cancion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.codigo_cancion, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.codigo_cancion, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.codigo_cancion, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.Label("Género", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("id_genero", null, "-- Seleccione un género --", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.id_genero, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.nombre_cancion, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => m.nombre_cancion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.nombre_cancion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.artista, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => m.artista, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.artista, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.precio, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => m.precio, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.precio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Guardar cambios" class="btn btn-success" />
+            @Html.ActionLink("Volver al listado", "Index", null, new { @class = "btn btn-default" })
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.id_genero, "Género", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("id_genero", null, "-- Seleccione un género --", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.id_genero, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.artista, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.artista, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.artista, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.nombre_cancion, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.nombre_cancion, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.nombre_cancion, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.precio, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

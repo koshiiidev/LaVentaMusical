@@ -1,68 +1,49 @@
 ﻿@model PAV_PF_JorgeIsaacLopezV.Cancion
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles de canción";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     string perfil = Session["PerfilNombre"] as string;
     bool esAdmin = string.Equals(perfil, "Administrador", StringComparison.OrdinalIgnoreCase);
 }
 
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Detalles de la canción</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>Código</dt>
+            <dd>@Html.DisplayFor(m => m.codigo_cancion)</dd>
 
-<h2>Details</h2>
+            <dt>Nombre</dt>
+            <dd>@Html.DisplayFor(m => m.nombre_cancion)</dd>
 
-<div>
-    <h4>Cancion</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.codigo_cancion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.codigo_cancion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.artista)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.artista)
-        </dd>
+            <dt>Artista</dt>
+            <dd>@Html.DisplayFor(m => m.artista)</dd>
 
+            <dt>Precio</dt>
+            <dd>@Html.DisplayFor(m => m.precio)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre_cancion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.nombre_cancion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.precio)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.precio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GeneroMusical.codigo_genero)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.GeneroMusical.codigo_genero)
-        </dd>
-    </dl>
+            <dt>Género</dt>
+            <dd>@Html.DisplayFor(m => m.GeneroMusical.descripcion)</dd>
+        </dl>
+    </div>
+    <div class="panel-footer">
+        @if (esAdmin)
+        {
+            @Html.ActionLink("Editar", "Edit", new { id = Model.id_cancion }, new { @class = "btn btn-warning" })
+            @Html.Raw(" ")
+        }
+        @Html.ActionLink("Volver al listado", "Index", null, new { @class = "btn btn-default" })
+        @Html.Raw(" ")
+        @Html.ActionLink(
+            "Agregar al carrito",
+            "AgregarAlCarrito",
+            "Ventas",
+            new { idCancion = Model.id_cancion },
+            new { @class = "btn btn-success" }
+        )
+    </div>
 </div>
-
-<p>
-    @if (esAdmin)
-    {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.id_cancion }) @: |
-    }
-    @Html.ActionLink("Back to List", "Index")  |
-    @Html.ActionLink(
-        "Agregar al carrito",
-        "AgregarAlCarrito",
-        "Ventas",
-        new { idCancion = Model.id_cancion },
-        null
-    )
-</p>

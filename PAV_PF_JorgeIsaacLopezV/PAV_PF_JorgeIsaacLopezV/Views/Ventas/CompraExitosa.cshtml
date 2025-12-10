@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="alert alert-success">
+<div class="jumbotron">
     <h2>Compra exitosa</h2>
     <p>Tu pago se ha procesado correctamente.</p>
 
@@ -17,7 +17,9 @@
         <p><strong>Total pagado:</strong> @String.Format("{0:C}", TempData["Total"]) </p>
     }
 
-    <p>
+    <p style="margin-top: 20px;">
         @Html.ActionLink("Volver al inicio", "Index", "Home", null, new { @class = "btn btn-primary" })
+        @Html.Raw(" ")
+        @Html.ActionLink("Seguir comprando", "Index", "Canciones", null, new { @class = "btn btn-default" })
     </p>
 </div>

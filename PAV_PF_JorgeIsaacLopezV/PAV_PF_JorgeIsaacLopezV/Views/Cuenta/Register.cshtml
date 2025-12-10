@@ -1,88 +1,59 @@
 ﻿@model PAV_PF_JorgeIsaacLopezV.Models.ViewModels.RegisterViewModel
+
 @{
-    ViewBag.Title = "Registro de Usuario";
+    ViewBag.Title = "Registrarse";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Registro de Usuario</h2>
-
-@using (Html.BeginForm("Register", "Cuenta", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <div class="form-horizontal">
-        <hr />
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.NumeroIdentificacion, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.NumeroIdentificacion, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.NumeroIdentificacion, "", new { @class = "text-danger" })
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">Crear cuenta</h3>
             </div>
-        </div>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.NombreCompleto, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.NombreCompleto, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.NombreCompleto, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.NombreCompleto)
+                        @Html.TextBoxFor(m => m.NombreCompleto, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.NombreCompleto, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Correo)
+                        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Contrasena)
+                        @Html.PasswordFor(m => m.Contrasena, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Contrasena, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmarContrasena)
+                        @Html.PasswordFor(m => m.ConfirmarContrasena, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ConfirmarContrasena, "", new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-block">
+                        Registrarse
+                    </button>
+                }
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Genero, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => m.Genero, (SelectList)ViewBag.GeneroLista, "-- Seleccione --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Genero, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Correo, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Correo, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.IdTipoTarjeta, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => m.IdTipoTarjeta, (SelectList)ViewBag.IdTipoTarjeta, "-- Seleccione --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.IdTipoTarjeta, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.NumeroTarjeta, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.NumeroTarjeta, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.NumeroTarjeta, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Contrasena, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Contrasena, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Contrasena, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmarContrasena, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmarContrasena, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.ConfirmarContrasena, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Registrarme" class="btn btn-success" />
-                @Html.ActionLink("Volver al inicio de sesión", "Login", "Cuenta", null, new { @class = "btn btn-link" })
+            <div class="panel-footer text-center">
+                ¿Ya tienes cuenta?
+                @Html.ActionLink("Inicia sesión", "Login", "Cuenta")
             </div>
         </div>
     </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
