@@ -48,7 +48,7 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.id_genero = new SelectList(db.GeneroMusical, "id_genero", "codigo_genero");
+            ViewBag.id_genero = new SelectList(db.GeneroMusical, "id_genero", "descripcion");
             return View();
         }
 
@@ -71,7 +71,7 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.id_genero = new SelectList(db.GeneroMusical, "id_genero", "codigo_genero", cancion.id_genero);
+            ViewBag.id_genero = new SelectList(db.GeneroMusical, "id_genero", "descripcion", cancion.id_genero);
             return View(cancion);
         }
 
@@ -91,7 +91,7 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.id_genero = new SelectList(db.GeneroMusical, "id_genero", "codigo_genero", cancion.id_genero);
+            ViewBag.id_genero = new SelectList(db.GeneroMusical, "id_genero", "descripcion", cancion.id_genero);
             return View(cancion);
         }
 
@@ -112,7 +112,7 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.id_genero = new SelectList(db.GeneroMusical, "id_genero", "codigo_genero", cancion.id_genero);
+            ViewBag.id_genero = new SelectList(db.GeneroMusical, "id_genero", "descripcion", cancion.id_genero);
             return View(cancion);
         }
 
@@ -152,11 +152,11 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
 
         private bool EsAdmin()
         {
-            return User != null
-                && User.Identity != null
-                && User.Identity.IsAuthenticated
-                && string.Equals(User.Identity.Name, "admin@gmail.com", StringComparison.OrdinalIgnoreCase);
+            var perfil = Session["PerfilNombre"] as string;
+            return string.Equals(perfil, "Administrador", StringComparison.OrdinalIgnoreCase);
         }
+
+
 
 
         protected override void Dispose(bool disposing)

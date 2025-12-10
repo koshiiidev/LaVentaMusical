@@ -4,11 +4,10 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    bool esAdmin = User != null
-                   && User.Identity != null
-                   && User.Identity.IsAuthenticated
-                   && User.Identity.Name == "admin@gmail.com";
+    string perfil = Session["PerfilNombre"] as string;
+    bool esAdmin = string.Equals(perfil, "Administrador", StringComparison.OrdinalIgnoreCase);
 }
+
 
 <h2>Details</h2>
 
@@ -51,7 +50,7 @@
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.id_cancion }) @: |
     }
-    @Html.ActionLink("Back to List", "Index") @: |
+    @Html.ActionLink("Back to List", "Index")  |
     @Html.ActionLink(
         "Agregar al carrito",
         "AgregarAlCarrito",

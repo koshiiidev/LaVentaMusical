@@ -1,114 +1,84 @@
 ﻿@model IEnumerable<PAV_PF_JorgeIsaacLopezV.Cancion>
+@using System.Linq
 
 @{
-    ViewBag.Title = "Inicio";
+    ViewBag.Title = "Canciones";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    // Este es el valor que tu layout ya usa para saber el rol
     string perfil = Session["PerfilNombre"] as string;
     bool esAdmin = string.Equals(perfil, "Administrador", StringComparison.OrdinalIgnoreCase);
 }
 
+<h2>Listado de canciones</h2>
+
 @if (esAdmin)
 {
-    <!-- =============================== -->
-    <!--      VISTA PARA ADMINISTRADOR    -->
-    <!-- =============================== -->
+    <p>
+        @Html.ActionLink("Crear nueva canción", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+}
 
-    <div class="jumbotron">
-        <h1>Panel de Administración</h1>
-        <p class="lead">
-            Bienvenido administrador. Aquí puedes gestionar canciones, géneros, usuarios y revisar ventas del sistema.
-        </p>
-
-        <p>
-            @Html.ActionLink(
-                "Gestionar canciones",
-                "Index",
-                "Canciones",
-                null,
-                new { @class = "btn btn-primary btn-lg" }
-            )
-        </p>
-    </div>
-
-    <div class="container">
-        <div class="row">
-
-            <div class="col-md-4">
-                <h3>Canciones</h3>
-                <p>Administra el catálogo musical completo.</p>
-                @Html.ActionLink("Administrar canciones", "Index", "Canciones", null, new { @class = "btn btn-default btn-block" })
-            </div>
-
-            <div class="col-md-4">
-                <h3>Usuarios</h3>
-                <p>Gestiona los usuarios registrados del sistema.</p>
-                @Html.ActionLink("Administrar usuarios", "Index", "Usuarios", null, new { @class = "btn btn-default btn-block" })
-            </div>
-
-            <div class="col-md-4">
-                <h3>Géneros</h3>
-                <p>Modifica y agrega géneros musicales disponibles.</p>
-                @Html.ActionLink("Administrar géneros", "Index", "GeneroMusical", null, new { @class = "btn btn-default btn-block" })
-            </div>
-
-        </div>
-
-        <hr />
-
-        <div class="row">
-            <div class="col-md-12 text-muted">
-                ¿Quieres ver la tienda como un cliente?
-                @Html.ActionLink("Ir a comprar canciones", "Index", "Canciones")
-            </div>
-        </div>
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">
+        No hay canciones registradas en el sistema.
     </div>
 }
 else
 {
-    <!-- =============================== -->
-    <!--       VISTA PARA CLIENTES       -->
-    <!-- =============================== -->
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.codigo_cancion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre_cancion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precio)
+            </th>
+            <th>
+                Genero
+            </th>
+            <th></th>
+        </tr>
 
-    <div class="jumbotron">
-        <h1>La Venta Musical</h1>
-        <p class="lead">
-            Descubre y compra tus canciones favoritas de forma rápida y sencilla.
-        </p>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.codigo_cancion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre_cancion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GeneroMusical.descripcion)
+                </td>
+                <td>
+                    @if (esAdmin)
+                    {
+                        @Html.ActionLink("Editar", "Edit", new { id = item.id_cancion }) @: |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.id_cancion }) @: |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.id_cancion }) @: |
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Detalles", "Details", new { id = item.id_cancion }) @: |
+                    }
 
-        <p>
-            @Html.ActionLink(
-                "Ir a comprar canciones",
-                "Index",
-                "Canciones",
-                null,
-                new { @class = "btn btn-primary btn-lg" }
-            )
-        </p>
-    </div>
-
-    <div class="container">
-        <div class="row">
-
-            <div class="col-md-4">
-                <h3>Explora el catálogo</h3>
-                <p>Revisa todas las canciones disponibles, filtradas por género y precio.</p>
-                @Html.ActionLink("Ver canciones", "Index", "Canciones", null, new { @class = "btn btn-default" })
-            </div>
-
-            <div class="col-md-4">
-                <h3>Agrega al carrito</h3>
-                <p>Selecciona tus canciones favoritas y añádelas al carrito.</p>
-                @Html.ActionLink("Ver carrito", "VerCarrito", "Ventas", null, new { @class = "btn btn-default" })
-            </div>
-
-            <div class="col-md-4">
-                <h3>Compra segura</h3>
-                <p>Finaliza tu compra y recibe el resumen de forma ordenada.</p>
-                @Html.ActionLink("Ir al pago", "Checkout", "Ventas", null, new { @class = "btn btn-default" })
-            </div>
-
-        </div>
-    </div>
+                    @Html.ActionLink(
+                        "Agregar al carrito",
+                        "AgregarAlCarrito",
+                        "Ventas",
+                        new { idCancion = item.id_cancion },
+                        new { @class = "btn btn-xs btn-success" }
+                    )
+                </td>
+            </tr>
+        }
+    </table>
 }

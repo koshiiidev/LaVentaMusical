@@ -2,159 +2,109 @@
     ViewBag.Title = "Inicio";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    bool esAdmin = User != null
-                   && User.Identity != null
-                   && User.Identity.IsAuthenticated
-                   && User.Identity.Name.Equals("admin@gmail.com", StringComparison.OrdinalIgnoreCase);
+    
+    string perfil = Session["PerfilNombre"] as string;
+    bool esAdmin = string.Equals(perfil, "Administrador", StringComparison.OrdinalIgnoreCase);
 }
 
-<div class="jumbotron">
-    @if (esAdmin)
-    {
+@if (esAdmin)
+{
+    <!-- =============================== -->
+    <!--      VISTA PARA ADMINISTRADOR   -->
+    <!-- =============================== -->
+
+    <div class="jumbotron">
         <h1>Panel de administración</h1>
         <p class="lead">
             Bienvenido, administrador. Desde aquí puedes gestionar el catálogo de canciones, géneros,
             usuarios y revisar las ventas del sistema.
         </p>
         <p>
-            @Html.ActionLink("Ver catálogo de canciones", "Index", "Canciones", null, new { @class = "btn btn-primary btn-lg" })
-            @Html.ActionLink("Registrar Géneros", "Index", "GenerosMusicales", null, new { @class = "btn btn-primary btn-lg" })
+            @Html.ActionLink(
+                "Gestionar canciones",
+                "Index",
+                "Canciones",
+                null,
+                new { @class = "btn btn-primary btn-lg" }
+            )
         </p>
-    }
-    else
-    {
-        <h1>La Venta Musical</h1>
-        <p class="lead">
-            Descubre y compra tus canciones favoritas de forma rápida y sencilla.
-        </p>
-        <p>
-            @Html.ActionLink("Ir a comprar canciones", "Index", "Canciones", null, new { @class = "btn btn-primary btn-lg" })
-        </p>
-    }
-</div>
+    </div>
 
-@if (esAdmin)
-{
-    <!-- Sección para ADMIN -->
     <div class="container">
         <div class="row">
 
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Canciones</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p>
-                            Administra el catálogo de canciones: crea, edita y elimina registros.
-                        </p>
-                        <p>
-                            @Html.ActionLink("Gestionar canciones", "Index", "Canciones", null, new { @class = "btn btn-primary btn-block" })
-                        </p>
-                    </div>
-                </div>
+            <div class="col-md-4">
+                <h3>Canciones</h3>
+                <p>Administra el catálogo musical completo.</p>
+                @Html.ActionLink("Administrar canciones", "Index", "Canciones", null, new { @class = "btn btn-default btn-block" })
             </div>
 
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Géneros musicales</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p>
-                            Mantén actualizada la lista de géneros musicales disponibles.
-                        </p>
-                        <p>
-                            @* Ajusta el nombre del controlador según tu proyecto (por ejemplo, "GeneroMusicals") *@
-                            @Html.ActionLink("Gestionar géneros", "Index", "GeneroMusicals", null, new { @class = "btn btn-primary btn-block" })
-                        </p>
-                    </div>
-                </div>
+            <div class="col-md-4">
+                <h3>Usuarios</h3>
+                <p>Gestiona los usuarios registrados del sistema.</p>
+                @Html.ActionLink("Administrar usuarios", "Index", "Usuarios", null, new { @class = "btn btn-default btn-block" })
             </div>
 
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Usuarios</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p>
-                            Revisa y administra los usuarios registrados en el sistema.
-                        </p>
-                        <p>
-                            @* Ajusta el nombre del controlador según tu proyecto (por ejemplo, "Usuarios") *@
-                            @Html.ActionLink("Gestionar usuarios", "Index", "Usuarios", null, new { @class = "btn btn-primary btn-block" })
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Ventas</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p>
-                            Consulta el historial de ventas y el detalle de las compras realizadas.
-                        </p>
-                        <p>
-                            @* Ajusta el nombre del controlador según tu proyecto (por ejemplo, "Ventas") *@
-                            @Html.ActionLink("Ver ventas", "Index", "Ventas", null, new { @class = "btn btn-primary btn-block" })
-                        </p>
-                    </div>
-                </div>
+            <div class="col-md-4">
+                <h3>Géneros</h3>
+                <p>Modifica y agrega géneros musicales disponibles.</p>
+                @Html.ActionLink("Administrar géneros", "Index", "GeneroMusicales", null, new { @class = "btn btn-default btn-block" })
             </div>
 
         </div>
 
+        <hr />
+
         <div class="row">
-            <div class="col-md-12">
-                <hr />
-                <p class="text-muted">
-                    También puedes ver el sistema como un cliente:
-                    @Html.ActionLink("Ir a comprar canciones", "Index", "Canciones", null, new { @class = "btn btn-link" })
-                </p>
+            <div class="col-md-12 text-muted">
+                También puedes ver el sistema como un cliente:
+                @Html.ActionLink("Ir a comprar canciones", "Index", "Canciones")
             </div>
         </div>
     </div>
 }
 else
 {
-    <!-- Sección para CLIENTE -->
+    <!-- =============================== -->
+    <!--          VISTA DE CLIENTE       -->
+    <!-- =============================== -->
+
+    <div class="jumbotron">
+        <h1>La Venta Musical</h1>
+        <p class="lead">
+            Descubre y compra tus canciones favoritas de forma rápida y sencilla.
+        </p>
+
+        <p>
+            @Html.ActionLink(
+                "Ir a comprar canciones",
+                "Index",
+                "Canciones",
+                null,
+                new { @class = "btn btn-primary btn-lg" }
+            )
+        </p>
+    </div>
+
     <div class="container">
         <div class="row">
 
             <div class="col-md-4">
                 <h3>Explora el catálogo</h3>
-                <p>
-                    Revisa todas las canciones disponibles, filtradas por género y precio.
-                </p>
-                <p>
-                    @Html.ActionLink("Ver canciones", "Index", "Canciones", null, new { @class = "btn btn-default" })
-                </p>
+                <p>Revisa todas las canciones disponibles, filtradas por género y precio.</p>
+                @Html.ActionLink("Ver canciones", "Index", "Canciones", null, new { @class = "btn btn-default" })
             </div>
 
             <div class="col-md-4">
                 <h3>Agrega al carrito</h3>
-                <p>
-                    Selecciona tus canciones favoritas y añádelas al carrito para completar tu compra.
-                </p>
-                <p>
-                    @* Ajusta el nombre de la acción/controlador del carrito según tu proyecto *@
-                    @Html.ActionLink("Ver carrito", "Carrito", "Ventas", null, new { @class = "btn btn-default" })
-                </p>
+                <p>Selecciona tus canciones favoritas y añádelas al carrito para completar tu compra.</p>
+                @Html.ActionLink("Ver carrito", "VerCarrito", "Ventas", null, new { @class = "btn btn-default" })
             </div>
 
             <div class="col-md-4">
                 <h3>Compra segura</h3>
-                <p>
-                    Finaliza el pago de tus canciones y recibe el resumen de tu compra de forma clara y ordenada.
-                </p>
-                <p>
-                    @* Ajusta la acción de pago según tu controlador de Ventas *@
-                    @Html.ActionLink("Ir al pago", "Checkout", "Ventas", null, new { @class = "btn btn-default" })
-                </p>
+                <p>Finaliza el pago de tus canciones y recibe el resumen de forma clara y ordenada.</p>
+                @Html.ActionLink("Ir al pago", "Checkout", "Ventas", null, new { @class = "btn btn-default" })
             </div>
 
         </div>
