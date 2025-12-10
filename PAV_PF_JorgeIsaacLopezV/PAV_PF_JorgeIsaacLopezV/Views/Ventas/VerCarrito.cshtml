@@ -1,19 +1,31 @@
 ﻿@model PAV_PF_JorgeIsaacLopezV.Models.ViewModels.CarritoViewModel
+@using System.Linq
 
 @{
     ViewBag.Title = "Carrito de Compra";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var tarjetas = ViewBag.Tarjetas as SelectList;
 }
 
 <h2>Carrito de Compra</h2>
 
+@if (TempData["ErrorPago"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorPago"]
+    </div>
+}
+
 @if (Model.Items == null || !Model.Items.Any())
 {
-    <p>No hay canciones en el carrito.</p>
+    <div class="alert alert-info">
+        No hay canciones en el carrito.
+    </div>
 }
 else
 {
-    <table class="table">
+    <table class="table table-striped table-bordered">
         <tr>
             <th>Canción</th>
             <th>Precio</th>
@@ -30,7 +42,13 @@ else
                 <td>@item.Cantidad</td>
                 <td>@item.Subtotal.ToString("C")</td>
                 <td>
-                    @Html.ActionLink("Eliminar", "EliminarDelCarrito", "Ventas", new { idCancion = item.IdCancion }, null)
+                    @Html.ActionLink(
+                        "Eliminar",
+                        "EliminarDelCarrito",
+                        "Ventas",
+                        new { idCancion = item.IdCancion },
+                        new { @class = "btn btn-xs btn-danger" }
+                    )
                 </td>
             </tr>
         }
@@ -45,6 +63,38 @@ else
     using (Html.BeginForm("ConfirmarCompra", "Ventas", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-success">Confirmar compra</button>
+
+        <h3>Método de pago</h3>
+
+        if (tarjetas != null && tarjetas.Any())
+        {
+            <div class="form-group">
+                @Html.Label("idTipoTarjeta", "Tarjeta asociada")
+                @Html.DropDownList(
+                    "idTipoTarjeta",
+                    tarjetas,
+                    null,
+                    new { @class = "form-control" }
+                )
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                Confirmar compra
+            </button>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                No tienes una tarjeta registrada. Debes completar tus datos de pago antes de realizar la compra.
+            </div>
+
+            @Html.ActionLink(
+                "Ir a mis datos",
+                "Edit",
+                "Usuarios",
+                new { id = Session["UsuarioId"] },
+                new { @class = "btn btn-primary" }
+            )
+        }
     }
 }

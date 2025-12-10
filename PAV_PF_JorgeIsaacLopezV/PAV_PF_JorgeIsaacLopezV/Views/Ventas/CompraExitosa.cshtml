@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Compra exitosa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="alert alert-success">
+    <h2>Compra exitosa</h2>
+    <p>Tu pago se ha procesado correctamente.</p>
+
+    @if (TempData["NumeroFactura"] != null)
+    {
+        <p><strong>Número de factura:</strong> @TempData["NumeroFactura"]</p>
+    }
+
+    @if (TempData["Total"] != null)
+    {
+        <p><strong>Total pagado:</strong> @String.Format("{0:C}", TempData["Total"]) </p>
+    }
+
+    <p>
+        @Html.ActionLink("Volver al inicio", "Index", "Home", null, new { @class = "btn btn-primary" })
+    </p>
+</div>

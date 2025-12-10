@@ -151,7 +151,7 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
 
             var carrito = ObtenerCarrito();
 
-            // ¿Ya está en el carrito?
+            
             var itemExistente = carrito.Items.FirstOrDefault(i => i.IdCancion == idCancion);
             if (itemExistente != null)
             {
@@ -170,13 +170,46 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
 
             Session["Carrito"] = carrito;
 
-            // Puedes redirigir de vuelta al listado de canciones
+            
             return RedirectToAction("Index", "Canciones");
         }
 
         public ActionResult VerCarrito()
         {
             var carrito = ObtenerCarrito();
+            if (Session["UsuarioId"] != null)
+            {
+                int idUsuario = (int)Session["UsuarioId"];
+
+                
+                var usuario = db.Usuario
+                                .Include("TipoTarjeta")
+                                .FirstOrDefault(u => u.id_usuario == idUsuario);
+
+                if (usuario != null && !string.IsNullOrWhiteSpace(usuario.numero_tarjeta))
+                {
+                    var descripcionTarjeta = usuario.TipoTarjeta != null
+                        ? usuario.TipoTarjeta.nombre_tarjeta
+                        : "Tarjeta";
+
+                    var ultimos4 = usuario.numero_tarjeta.Length >= 4
+                        ? usuario.numero_tarjeta.Substring(usuario.numero_tarjeta.Length - 4)
+                        : usuario.numero_tarjeta;
+
+                    
+                    var listaTarjetas = new[]
+                    {
+                new
+                {
+                    Id = usuario.id_tipo_tarjeta,
+                    Descripcion = string.Format("{0} - ****{1}", descripcionTarjeta, ultimos4)
+                }
+            };
+
+                    ViewBag.Tarjetas = new SelectList(listaTarjetas, "Id", "Descripcion", usuario.id_tipo_tarjeta);
+                }
+            }
+
             return View(carrito);
         }
 
@@ -201,29 +234,43 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
 
             if (carrito.Items == null || !carrito.Items.Any())
             {
-                // Sin items, no hay nada que facturar
+                TempData["ErrorPago"] = "El carrito está vacío. No hay nada que comprar.";
                 return RedirectToAction("VerCarrito");
             }
 
-            // Aquí debes obtener el id del usuario logueado desde tu sistema de login.
-            // Ejemplo: supongamos que lo guardaste en Session["IdUsuario"]
-            if (Session["IdUsuario"] == null)
+            if (Session["UsuarioId"] == null)
             {
-                // Si no hay usuario, redirige a login o muestra mensaje
-                return RedirectToAction("Index", "Home");
+                TempData["ErrorPago"] = "Debe iniciar sesión para realizar la compra.";
+                return RedirectToAction("VerCarrito");
             }
 
-            int idUsuario = (int)Session["IdUsuario"];
+            int idUsuario = (int)Session["UsuarioId"];
 
-            // Calcular montos
+            var usuario = db.Usuario
+                            .Include("TipoTarjeta")
+                            .FirstOrDefault(u => u.id_usuario == idUsuario);
+
+            if (usuario == null)
+            {
+                TempData["ErrorPago"] = "No se encontró la información del usuario.";
+                return RedirectToAction("VerCarrito");
+            }
+
+            if (string.IsNullOrWhiteSpace(usuario.numero_tarjeta))
+            {
+                TempData["ErrorPago"] = "No tiene una tarjeta registrada. Actualice sus datos antes de realizar el pago.";
+                return RedirectToAction("VerCarrito");
+            }
+
+            
             decimal subtotal = carrito.Subtotal;
-            decimal iva = carrito.Iva;      // 13%
-            decimal total = carrito.Total;  // subtotal + iva
+            decimal iva = carrito.Iva;
+            decimal total = carrito.Total;
 
-            // Generar número de factura sencillo (puedes mejorarlo)
+            
             string numeroFactura = "FAC-" + DateTime.Now.Ticks;
 
-            // Crear Venta
+            
             var venta = new Venta
             {
                 numero_factura = numeroFactura,
@@ -235,9 +282,9 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
             };
 
             db.Venta.Add(venta);
-            db.SaveChanges(); // Necesitamos que EF asigne id_venta
+            db.SaveChanges(); 
 
-            // Crear Detalles
+            
             foreach (var item in carrito.Items)
             {
                 var detalle = new DetalleVenta
@@ -254,11 +301,20 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
 
             db.SaveChanges();
 
-            // Limpiar carrito
+            
             Session["Carrito"] = null;
 
-            // Redirigir, por ejemplo, al Details de la venta recién creada
-            return RedirectToAction("Details", new { id = venta.id_venta });
+            
+            TempData["NumeroFactura"] = venta.numero_factura;
+            TempData["Total"] = venta.total;
+
+            return RedirectToAction("CompraExitosa");
         }
+
+        public ActionResult CompraExitosa()
+        {
+            return View();
+        }
+
     }
 }
