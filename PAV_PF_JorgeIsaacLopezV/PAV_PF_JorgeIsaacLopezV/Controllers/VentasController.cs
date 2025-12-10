@@ -267,10 +267,10 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
             decimal iva = carrito.Iva;
             decimal total = carrito.Total;
 
-            
-            string numeroFactura = "FAC-" + DateTime.Now.Ticks;
 
-            
+            string numeroFactura = "FAC-" + DateTime.Now.ToString("yyyyMMddHHmmss");
+
+
             var venta = new Venta
             {
                 numero_factura = numeroFactura,

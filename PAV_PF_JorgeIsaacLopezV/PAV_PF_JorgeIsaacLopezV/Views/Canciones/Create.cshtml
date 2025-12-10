@@ -22,7 +22,7 @@
 
             <div class="form-horizontal">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.codigo_cancion, new { @class = "control-label col-md-2" })
+                    @Html.Label("Codigo Cancion", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(m => m.codigo_cancion, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(m => m.codigo_cancion, "", new { @class = "text-danger" })
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.nombre_cancion, new { @class = "control-label col-md-2" })
+                    @Html.Label("Titulo", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(m => m.nombre_cancion, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(m => m.nombre_cancion, "", new { @class = "text-danger" })
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.artista, new { @class = "control-label col-md-2" })
+                    @Html.Label("Artista", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(m => m.artista, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(m => m.artista, "", new { @class = "text-danger" })
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.precio, new { @class = "control-label col-md-2" })
+                    @Html.Label("Precio", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(m => m.precio, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(m => m.precio, "", new { @class = "text-danger" })

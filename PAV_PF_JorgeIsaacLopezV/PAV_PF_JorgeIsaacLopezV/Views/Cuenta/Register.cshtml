@@ -18,15 +18,49 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     <div class="form-group">
+                        @Html.LabelFor(m => m.NumeroIdentificacion)
+                        @Html.TextBoxFor(m => m.NumeroIdentificacion, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.NumeroIdentificacion, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
                         @Html.LabelFor(m => m.NombreCompleto)
                         @Html.TextBoxFor(m => m.NombreCompleto, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.NombreCompleto, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
+                        @Html.LabelFor(m => m.Genero)
+                        @Html.DropDownListFor(
+                            m => m.Genero,
+                            (SelectList)ViewBag.GeneroLista,
+                            "-- Seleccione género --",
+                            new { @class = "form-control" }
+                        )
+                        @Html.ValidationMessageFor(m => m.Genero, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
                         @Html.LabelFor(m => m.Correo)
                         @Html.TextBoxFor(m => m.Correo, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IdTipoTarjeta, "Tipo de tarjeta")
+                        @Html.DropDownListFor(
+                            m => m.IdTipoTarjeta,
+                            (SelectList)ViewBag.IdTipoTarjeta,
+                            "-- Seleccione tipo de tarjeta --",
+                            new { @class = "form-control" }
+                        )
+                        @Html.ValidationMessageFor(m => m.IdTipoTarjeta, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.NumeroTarjeta)
+                        @Html.TextBoxFor(m => m.NumeroTarjeta, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.NumeroTarjeta, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">

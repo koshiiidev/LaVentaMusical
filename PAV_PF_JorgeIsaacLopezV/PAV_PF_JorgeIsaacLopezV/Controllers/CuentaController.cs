@@ -96,7 +96,6 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
         }
 
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
@@ -114,7 +113,12 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
                     model.Genero
                 );
 
-                ViewBag.IdTipoTarjeta = new SelectList(db.TipoTarjeta, "IdTipoTarjeta", "NombreTarjeta", model.IdTipoTarjeta);
+                ViewBag.IdTipoTarjeta = new SelectList(
+                    db.TipoTarjeta.ToList(),
+                    "id_tipo_tarjeta",
+                    "nombre_tarjeta",
+                    model.IdTipoTarjeta
+                );
 
                 return View(model);
             }
@@ -135,7 +139,38 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
                     model.Genero
                 );
 
-                ViewBag.IdTipoTarjeta = new SelectList(db.TipoTarjeta, "IdTipoTarjeta", "NombreTarjeta", model.IdTipoTarjeta);
+                ViewBag.IdTipoTarjeta = new SelectList(
+                    db.TipoTarjeta.ToList(),
+                    "id_tipo_tarjeta",
+                    "nombre_tarjeta",
+                    model.IdTipoTarjeta
+                );
+
+                return View(model);
+            }
+
+            
+            if (db.Usuario.Any(u => u.numero_identificacion == model.NumeroIdentificacion))
+            {
+                ModelState.AddModelError("", "Ya existe un usuario registrado con ese número de identificación.");
+
+                ViewBag.GeneroLista = new SelectList(
+                    new[]
+                    {
+                new { Value = "Masculino", Text = "Masculino" },
+                new { Value = "Femenino", Text = "Femenino" }
+                    },
+                    "Value",
+                    "Text",
+                    model.Genero
+                );
+
+                ViewBag.IdTipoTarjeta = new SelectList(
+                    db.TipoTarjeta.ToList(),
+                    "id_tipo_tarjeta",
+                    "nombre_tarjeta",
+                    model.IdTipoTarjeta
+                );
 
                 return View(model);
             }
@@ -144,6 +179,25 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
             if (perfilUsuario == null)
             {
                 ModelState.AddModelError("", "No se encontró el perfil 'Usuario' en la base de datos.");
+
+                ViewBag.GeneroLista = new SelectList(
+                    new[]
+                    {
+                new { Value = "Masculino", Text = "Masculino" },
+                new { Value = "Femenino", Text = "Femenino" }
+                    },
+                    "Value",
+                    "Text",
+                    model.Genero
+                );
+
+                ViewBag.IdTipoTarjeta = new SelectList(
+                    db.TipoTarjeta.ToList(),
+                    "id_tipo_tarjeta",
+                    "nombre_tarjeta",
+                    model.IdTipoTarjeta
+                );
+
                 return View(model);
             }
 
@@ -162,7 +216,6 @@ namespace PAV_PF_JorgeIsaacLopezV.Controllers
             db.Usuario.Add(nuevoUsuario);
             db.SaveChanges();
 
-           
             Session["UsuarioId"] = nuevoUsuario.id_usuario;
             Session["NombreUsuario"] = nuevoUsuario.nombre_completo;
             Session["PerfilId"] = nuevoUsuario.id_perfil;
